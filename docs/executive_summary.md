@@ -190,5 +190,4 @@ Les tests démontrent une **fiabilité opérationnelle** (76.4% de précision) e
 
 ---
 
-*Document préparé par l'équipe Data Science - Confidentiel*  
-*Date : Janvier 2025 - Version 1.0*
+

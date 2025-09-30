@@ -37,10 +37,10 @@ class Dataset:
         Télécharge et extrait le dataset Telco Customer Churn si ce n'est pas déjà fait.
         """
         if self.data_already_downloaded():
-            print("✅ Le dataset Telco Customer Churn existe déjà, téléchargement ignoré.")
+            print(" Le dataset Telco Customer Churn existe déjà, téléchargement ignoré.")
             csv_path = os.path.join(self.dataset_path, self.csv_filename)
             df = pd.read_csv(csv_path)
-            print(f"📊 Dimensions: {df.shape[0]} lignes, {df.shape[1]} colonnes")
+            print(f" Dimensions: {df.shape[0]} lignes, {df.shape[1]} colonnes")
             return
 
         # Vérifier d'abord s'il y a déjà un fichier ZIP à extraire
@@ -49,7 +49,7 @@ class Dataset:
 
         # Sinon, essayer de télécharger
         try:
-            print(f"📥 Téléchargement du dataset: {self.dataset_name}")
+            print(f" Téléchargement du dataset: {self.dataset_name}")
             
             # Télécharger le dataset Kaggle
             result = subprocess.run([
@@ -58,14 +58,14 @@ class Dataset:
                 "-p", self.dataset_path
             ], check=True, capture_output=True, text=True)
 
-            print("✅ Téléchargement terminé")
+            print(" Téléchargement terminé")
 
             # Extraire le fichier ZIP téléchargé
             self._extract_existing_zip()
 
         except subprocess.CalledProcessError as e:
-            print(f"❌ Erreur lors du téléchargement Kaggle: {e}")
-            print("📝 Vérifiez votre configuration Kaggle:")
+            print(f" Erreur lors du téléchargement Kaggle: {e}")
+            print("Vérifiez votre configuration Kaggle:")
             print("   1. Assurez-vous que kaggle est installé: pip install kaggle")
             print("   2. Configurez vos credentials Kaggle (kaggle.json)")
             print("   3. Vérifiez que le fichier kaggle.json est dans le bon répertoire:")
@@ -76,7 +76,7 @@ class Dataset:
             print("   5. Placez le fichier archive.zip téléchargé dans data/raw/")
             
         except Exception as e:
-            print(f"❌ Erreur inattendue: {e}")
+            print(f"Erreur inattendue: {e}")
 
     def _extract_existing_zip(self):
         """
@@ -108,39 +108,39 @@ class Dataset:
         zip_path = os.path.join(self.dataset_path, zip_to_extract)
         
         try:
-            print(f"📦 Extraction du fichier ZIP: {zip_to_extract}")
+            print(f" Extraction du fichier ZIP: {zip_to_extract}")
             with zipfile.ZipFile(zip_path, "r") as zip_ref:
                 zip_ref.extractall(self.dataset_path)
 
             # Supprimer le fichier ZIP après extraction
             os.remove(zip_path)
-            print("✅ Extraction terminée, fichier ZIP supprimé")
+            print("Extraction terminée, fichier ZIP supprimé")
 
             # Vérifier que le fichier CSV est présent
             csv_path = os.path.join(self.dataset_path, self.csv_filename)
             if os.path.exists(csv_path):
                 df = pd.read_csv(csv_path)
-                print(f"✅ Dataset extrait avec succès!")
-                print(f"📊 Fichier: {self.csv_filename}")
-                print(f"📊 Dimensions: {df.shape[0]} lignes, {df.shape[1]} colonnes")
+                print(f"Dataset extrait avec succès!")
+                print(f" Fichier: {self.csv_filename}")
+                print(f" Dimensions: {df.shape[0]} lignes, {df.shape[1]} colonnes")
                 return True
             else:
-                print("⚠️ Le fichier CSV attendu n'a pas été trouvé après extraction")
+                print("Le fichier CSV attendu n'a pas été trouvé après extraction")
                 self._list_downloaded_files()
                 return False
                 
         except zipfile.BadZipFile:
-            print(f"❌ Le fichier {zip_to_extract} n'est pas un fichier ZIP valide")
+            print(f" Le fichier {zip_to_extract} n'est pas un fichier ZIP valide")
             return False
         except Exception as e:
-            print(f"❌ Erreur lors de l'extraction: {e}")
+            print(f" Erreur lors de l'extraction: {e}")
             return False
 
     def _list_downloaded_files(self):
         """
         Liste les fichiers téléchargés pour debug
         """
-        print("📁 Fichiers présents dans le répertoire:")
+        print(" Fichiers présents dans le répertoire:")
         for file in os.listdir(self.dataset_path):
             file_path = os.path.join(self.dataset_path, file)
             if os.path.isfile(file_path):
@@ -154,23 +154,23 @@ class Dataset:
             csv_path = os.path.join(self.dataset_path, self.csv_filename)
             
             if not os.path.exists(csv_path):
-                print(f"❌ Fichier non trouvé: {csv_path}")
+                print(f" Fichier non trouvé: {csv_path}")
                 print("Exécutez d'abord data_downloads() pour télécharger le dataset")
                 print("Ou téléchargez manuellement et placez archive.zip dans data/raw/")
                 return None
                 
             df = pd.read_csv(csv_path)
-            print(f"✅ Dataset chargé: {df.shape[0]} lignes, {df.shape[1]} colonnes")
+            print(f" Dataset chargé: {df.shape[0]} lignes, {df.shape[1]} colonnes")
             return df
             
         except FileNotFoundError as e:
-            print(f"❌ Fichier non trouvé: {e}")
+            print(f" Fichier non trouvé: {e}")
             return None
         except pd.errors.EmptyDataError as e:
-            print(f"❌ Fichier vide: {e}")
+            print(f"Fichier vide: {e}")
             return None
         except Exception as e:
-            print(f"❌ Erreur inattendue lors du chargement: {e}")
+            print(f" Erreur inattendue lors du chargement: {e}")
             return None
 
     def get_dataset_info(self):

@@ -1,7 +1,13 @@
 import pandas as pd
-from preprocessor import DataPreprocessor
 import os
+import sys
 from pathlib import Path
+
+# Ajouter le dossier racine au PYTHONPATH
+project_root = Path(__file__).parent.parent.parent
+sys.path.append(str(project_root))
+
+from src.data.preprocessor import DataPreprocessor
 
 def main():
     # Obtenir le chemin absolu du projet
