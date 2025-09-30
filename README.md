@@ -77,7 +77,7 @@ churn_prediction/
 ### 1. Configuration de l'Environnement
 ```bash
 # Cloner le projet
-git clone <repository-url>
+git clone https://github.com/guylain237/churn_predictions.git
 cd churn_prediction
 
 # Créer et activer l'environnement virtuel
